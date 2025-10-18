@@ -93,7 +93,7 @@ export const grantLoanUpdateZodSchema = z.object({
     .refine((val) => val === "" || !isNaN(Number(val)), {
       message: "Installment period must be a number",
     })
-    .refine((val) => parseInt(val), {
+    .refine((val) => Number.isInteger(Number(val)), {
       message: "Installment period must be an integer",
     })
     .refine((val) => Number(val) >= 1, {
