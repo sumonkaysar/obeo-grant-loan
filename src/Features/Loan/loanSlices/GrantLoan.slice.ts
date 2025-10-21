@@ -12,7 +12,7 @@ const initialState: IGrantLoanState = {
   grantedLoan: grantedLoanData,
   tableState: {
     globalFilter: "",
-    sorting: [{ desc: false, id: "approveDate" }],
+    sorting: [{ desc: false, id: "sl" }],
     rowSelection: {},
     pagination: {
       pageIndex: 0,

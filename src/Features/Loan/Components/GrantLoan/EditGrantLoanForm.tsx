@@ -36,10 +36,12 @@ import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, parseISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import type z from "zod";
 
 const EditGrantLoanForm = () => {
+  const closeCalendarRef = useRef<HTMLButtonElement>(null);
   const { grantedLoan, grantLoanEditId } = useAppSelector(selectGrantLoanData);
   const dispatch = useAppDispatch();
   const prevData = grantedLoan.find((s) => s._id === grantLoanEditId);
@@ -128,12 +130,7 @@ const EditGrantLoanForm = () => {
                         Total Amount <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          min={0}
-                          placeholder="Total Amount"
-                          {...field}
-                        />
+                        <Input placeholder="Total Amount" {...field} />
                       </FormControl>
                       <FormDescription className="sr-only">
                         Enter Total Amount.
@@ -153,14 +150,7 @@ const EditGrantLoanForm = () => {
                         <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          min={0.1}
-                          step={0.1}
-                          max={100}
-                          placeholder="Interest Percentage"
-                          {...field}
-                        />
+                        <Input placeholder="Interest Percentage" {...field} />
                       </FormControl>
                       <FormDescription className="sr-only">
                         Enter Interest Percentage.
@@ -180,13 +170,7 @@ const EditGrantLoanForm = () => {
                         <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          min={1}
-                          max={120}
-                          placeholder="Installment Period"
-                          {...field}
-                        />
+                        <Input placeholder="Installment Period" {...field} />
                       </FormControl>
                       <FormDescription className="sr-only">
                         Enter Installment Period.
@@ -208,6 +192,7 @@ const EditGrantLoanForm = () => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              ref={closeCalendarRef}
                               variant={"outline"}
                               className={cn(
                                 "pl-3 text-left font-normal",
@@ -231,6 +216,7 @@ const EditGrantLoanForm = () => {
                             }
                             onSelect={(date) => {
                               field.onChange(date);
+                              closeCalendarRef.current?.click();
                             }}
                             captionLayout="dropdown"
                           />

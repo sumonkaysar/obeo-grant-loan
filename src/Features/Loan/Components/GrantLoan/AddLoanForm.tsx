@@ -48,6 +48,7 @@ import type z from "zod";
 
 const AddLoanForm = () => {
   const { employees } = useAppSelector(selectGrantLoanData);
+  const closeCalendarRef = useRef<HTMLButtonElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const dispatch = useAppDispatch();
   const form = useForm({
@@ -214,12 +215,7 @@ const AddLoanForm = () => {
                           Total Amount <span className="text-red-500">*</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            type="number"
-                            min={0}
-                            placeholder="Total Amount"
-                            {...field}
-                          />
+                          <Input placeholder="Total Amount" {...field} />
                         </FormControl>
                         <FormDescription className="sr-only">
                           Enter Total Amount.
@@ -239,14 +235,7 @@ const AddLoanForm = () => {
                           <span className="text-red-500">*</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            type="number"
-                            min={0.1}
-                            step={0.1}
-                            max={100}
-                            placeholder="Interest Percentage"
-                            {...field}
-                          />
+                          <Input placeholder="Interest Percentage" {...field} />
                         </FormControl>
                         <FormDescription className="sr-only">
                           Enter Interest Percentage.
@@ -266,13 +255,7 @@ const AddLoanForm = () => {
                           <span className="text-red-500">*</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            type="number"
-                            min={1}
-                            max={120}
-                            placeholder="Installment Period"
-                            {...field}
-                          />
+                          <Input placeholder="Installment Period" {...field} />
                         </FormControl>
                         <FormDescription className="sr-only">
                           Enter Installment Period.
@@ -294,6 +277,7 @@ const AddLoanForm = () => {
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
+                                ref={closeCalendarRef}
                                 variant={"outline"}
                                 className={cn(
                                   "pl-3 text-left font-normal",
@@ -317,6 +301,7 @@ const AddLoanForm = () => {
                               }
                               onSelect={(date) => {
                                 field.onChange(date);
+                                closeCalendarRef.current?.click();
                               }}
                               captionLayout="dropdown"
                             />
